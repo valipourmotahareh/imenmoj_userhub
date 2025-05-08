@@ -7,6 +7,15 @@
     "password" : "رمز عبور",
     "label_register": "حساب کاربری ندارید؟ ثبت نام کنید",
     "label_login": "حساب کاربری دارید؟ وارد شوید"
+  },
+  "user_form_screen": {
+    "select_gallery": "انتخاب از گالری",
+    "taking_picture_camera": "گرفتن عکس با دوربین",
+    "user_edit": "ویرایش کاربر",
+    "user_create": "ایجاد کاربر",
+    "user_name": "نام",
+    "user_email": "ایمیل",
+    "user_save": "ذخیره"
 
   }
 }

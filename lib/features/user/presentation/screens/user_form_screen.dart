@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -51,7 +52,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
           children: [
             ListTile(
               leading: const Icon(Icons.photo_library),
-              title: const Text('انتخاب از گالری'),
+              title: Text('user_form_screen.select_gallery'.tr()),
               onTap: () async {
                 final picked = await picker.pickImage(source: ImageSource.gallery);
                 Navigator.pop(context, picked);
@@ -59,7 +60,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
             ),
             ListTile(
               leading: const Icon(Icons.camera_alt),
-              title: const Text('گرفتن عکس با دوربین'),
+              title:  Text('user_form_screen.taking_picture_camera'.tr()),
               onTap: () async {
                 final picked = await picker.pickImage(source: ImageSource.camera);
                 Navigator.pop(context, picked);
@@ -115,7 +116,7 @@ class _UserFormScreenState extends State<UserFormScreen> {
     final isEditing = _user != null;
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'ویرایش کاربر' : 'ایجاد کاربر'),
+        title: Text(isEditing ? 'user_form_screen.user_edit'.tr() : 'user_form_screen.user_create'.tr()),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -140,17 +141,17 @@ class _UserFormScreenState extends State<UserFormScreen> {
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _nameController,
-                labelText: 'نام',
+                labelText: 'user_form_screen.user_name'.tr(),
               ),
               const SizedBox(height: 16),
               CustomTextField(
                 controller: _emailController,
-                labelText: 'ایمیل',
+                labelText: 'user_form_screen.user_email'.tr(),
               ),
               const SizedBox(height: 24),
               CustomButton(
                 onPressed: _submit,
-                text: 'ذخیره',
+                text: 'user_form_screen.user_save'.tr(),
               ),
             ],
           ),

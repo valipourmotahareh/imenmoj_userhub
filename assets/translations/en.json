@@ -8,5 +8,15 @@
     "label_register": "Don't have an account?",
     "label_login": "Do you have an account? Log in"
 
+  },
+  "user_form_screen": {
+    "select_gallery": "Select From Gallery",
+    "taking_picture_camera": "Taking From Camera",
+    "user_edit": "Edit User",
+    "user_create": "Create User",
+    "user_name": "Name",
+    "user_email": "Email",
+    "user_save": "Save"
+
   }
 }
