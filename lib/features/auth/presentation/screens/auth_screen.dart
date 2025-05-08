@@ -67,6 +67,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     _isLogin
                         ? 'auth_screen.login'.tr()
                         : 'auth_screen.register'.tr(),
+                    style: Theme.of(context).textTheme.titleLarge,
                   ),
                   const SizedBox(height: 32),
                   if (!_isLogin)
@@ -103,6 +104,10 @@ class _AuthScreenState extends State<AuthScreen> {
                       _isLogin
                           ? 'auth_screen.label_register'.tr()
                           : 'auth_screen.label_login'.tr(),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Colors.indigo,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],

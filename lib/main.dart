@@ -12,6 +12,7 @@ import 'package:imenmoj_userhub/features/user/data/models/user_model.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_bloc.dart';
 
 import 'config/app_config.dart';
+import 'config/theme/app_theme.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
@@ -75,10 +76,11 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp.router(
+
         locale: context.locale,
         debugShowCheckedModeBanner: false,
         title: 'Imen Moj Task',
-        theme: ThemeData(primarySwatch: Colors.blue),
+        theme:appTheme,
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
         routerConfig: AppRouter().router,

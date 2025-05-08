@@ -9,6 +9,7 @@ import 'package:imenmoj_userhub/config/router/routes.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_bloc.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_event.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_state.dart';
+import 'package:imenmoj_userhub/user_item.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -103,61 +104,15 @@ class UserListScreen extends StatelessWidget {
           } else if (state is UserLoaded) {
             final users = state.users;
             return ListView.builder(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(12),
               itemCount: users.length,
               itemBuilder: (context, index) {
                 final user = users[index];
-                return Card(
-                  margin: const EdgeInsets.symmetric(
-                    horizontal: 8,
-                    vertical: 4,
-                  ),
-                  child: ListTile(
-                    leading:
-                        user.avatarUrl.isNotEmpty
-                            ? ClipOval(
-                              child: SizedBox(
-                                width: 48,
-                                height: 48,
-                                child: Image.file(
-                                  File(user.avatarUrl),
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            )
-                            : const Icon(Icons.person, size: 48),
-                    title: Text(user.name),
-                    subtitle: Text(user.email),
-                    trailing: PopupMenuButton<String>(
-                      onSelected: (value) {
-                        if (value == 'edit') {
-                          context.pushNamed(Routes.userFormScreen,
-                            extra: user,
-                          );
-                        } else if (value == 'delete') {
-                          context.read<UserBloc>().add(DeleteUser(user.id));
-                        } else if (value == 'download') {
-                          _downloadImage(context, user.avatarUrl);
-                        }
-                      },
-                      itemBuilder:
-                          (context) => [
-                            PopupMenuItem(
-                              value: 'edit',
-                              child: Text('user_list_screen.edit'.tr()),
-                            ),
-                            PopupMenuItem(
-                              value: 'delete',
-                              child: Text('user_list_screen.delete'.tr()),
-                            ),
-                            PopupMenuItem(
-                              value: 'download',
-                              child: Text(
-                                'user_list_screen.download_image'.tr(),
-                              ),
-                            ),
-                          ],
-                    ),
-                  ),
+                return UserItem(
+                  user: user,
+                  onDelete: () => context.read<UserBloc>().add(DeleteUser(user.id)),
+                  onDownload: () => _downloadImage(context, user.avatarUrl),
                 );
               },
             );
