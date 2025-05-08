@@ -4,6 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:go_router/go_router.dart';
+import 'package:imenmoj_userhub/config/router/routes.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_bloc.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_event.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_state.dart';
@@ -89,7 +91,7 @@ class UserListScreen extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.add),
             onPressed: () {
-              Navigator.pushNamed(context, '/user_form');
+              context.pushNamed(Routes.userFormScreen);
             },
           ),
         ],
@@ -128,10 +130,8 @@ class UserListScreen extends StatelessWidget {
                     trailing: PopupMenuButton<String>(
                       onSelected: (value) {
                         if (value == 'edit') {
-                          Navigator.pushNamed(
-                            context,
-                            '/user_form',
-                            arguments: user,
+                          context.pushNamed(Routes.userFormScreen,
+                            extra: user,
                           );
                         } else if (value == 'delete') {
                           context.read<UserBloc>().add(DeleteUser(user.id));

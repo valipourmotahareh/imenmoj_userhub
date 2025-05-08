@@ -11,7 +11,8 @@ import 'package:imenmoj_userhub/features/user/presentation/bloc/user_bloc.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_event.dart';
 
 class UserFormScreen extends StatefulWidget {
-  const UserFormScreen({super.key});
+  final UserModel? user;
+  const UserFormScreen({super.key,this.user});
 
   @override
   State<UserFormScreen> createState() => _UserFormScreenState();
@@ -27,19 +28,11 @@ class _UserFormScreenState extends State<UserFormScreen> {
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
-    _emailController = TextEditingController();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    final args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && args is UserModel) {
-      _user = args;
-      _nameController.text = _user!.name;
-      _emailController.text = _user!.email;
-    }
+    _nameController = TextEditingController(text: widget.user?.name ?? '');
+    _emailController = TextEditingController(text: widget.user?.email ?? '');
+    _avatarImage = widget.user?.avatarUrl.isNotEmpty == true
+        ? File(widget.user!.avatarUrl)
+        : null;
   }
 
   Future<void> _pickImage() async {

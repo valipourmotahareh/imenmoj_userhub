@@ -1,6 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+import 'package:imenmoj_userhub/config/router/routes.dart';
 import 'package:imenmoj_userhub/core/widgets/custom_button.dart';
 import 'package:imenmoj_userhub/core/widgets/custom_text_field.dart';
 import 'package:imenmoj_userhub/features/auth/presentation/bloc/auth_bloc.dart';
@@ -52,10 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
               context,
             ).showSnackBar(SnackBar(content: Text(state.message)));
           } else if (state is AuthSuccess) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (_) => const UserListScreen()),
-            );
+            context.pushNamed(Routes.userListScreen);
           }
         },
         builder: (context, state) {

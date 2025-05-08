@@ -4,13 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:imenmoj_userhub/config/router/app_router.dart';
 import 'package:imenmoj_userhub/core/appwrite/appwrite_client.dart';
 import 'package:imenmoj_userhub/core/di/injection.dart';
 import 'package:imenmoj_userhub/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:imenmoj_userhub/features/user/data/models/user_model.dart';
 import 'package:imenmoj_userhub/features/user/presentation/bloc/user_bloc.dart';
-import 'package:imenmoj_userhub/features/auth/presentation/screens/auth_screen.dart';
-import 'package:imenmoj_userhub/features/user/presentation/screens/user_form_screen.dart';
 
 import 'config/app_config.dart';
 
@@ -75,18 +74,14 @@ class MyApp extends StatelessWidget {
           create: (_) => getIt<UserBloc>(),
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         locale: context.locale,
         debugShowCheckedModeBanner: false,
         title: 'Imen Moj Task',
         theme: ThemeData(primarySwatch: Colors.blue),
         supportedLocales: context.supportedLocales,
         localizationsDelegates: context.localizationDelegates,
-        initialRoute: '/',
-        routes: {
-          '/': (context) => AuthScreen(),
-          '/user_form': (context) => const UserFormScreen(),
-        },
+        routerConfig: AppRouter().router,
       ),
     );
   }
