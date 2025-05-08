@@ -8,7 +8,6 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository repository;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
-  // Constructor with notifications plugin injected
   UserBloc(this.repository, this.flutterLocalNotificationsPlugin) : super(UserInitial()) {
     on<LoadUsersEvent>((event, emit) async {
       emit(UserLoading());
@@ -39,7 +38,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     NotificationDetails(android: androidPlatformChannelSpecifics);
 
     await flutterLocalNotificationsPlugin.show(
-      0, // You can make it dynamic based on your needs
+      0,
       title,
       body,
       platformChannelSpecifics,

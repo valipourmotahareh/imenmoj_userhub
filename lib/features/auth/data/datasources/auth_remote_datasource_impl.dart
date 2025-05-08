@@ -19,7 +19,7 @@ class AuthRemoteDataSourceImpl {
     String? avatarUrl,
   }) async {
     try {
-      // ایجاد حساب کاربری
+      ///Create an account
       final user = await _account.create(
         userId: ID.unique(),
         email: email,
@@ -27,7 +27,7 @@ class AuthRemoteDataSourceImpl {
         name: name,
       );
 
-      // بررسی و حذف نشست‌های فعال در صورت وجود
+      /// Check and delete active sessions if any.
       try {
         await _account.createEmailPasswordSession(
           email: email,
@@ -46,7 +46,7 @@ class AuthRemoteDataSourceImpl {
         }
       }
 
-      // ایجاد سند در دیتابیس
+      /// Creating a document in the database
       await _databases.createDocument(
         databaseId: databaseId,
         collectionId: collectionId,
@@ -60,11 +60,9 @@ class AuthRemoteDataSourceImpl {
 
       return user;
     } on AppwriteException catch (e) {
-      // مدیریت خطاهای Appwrite
       print('AppwriteException: ${e.message}');
       rethrow;
     } catch (e) {
-      // مدیریت سایر خطاها
       print('Exception: $e');
       rethrow;
     }
@@ -81,14 +79,14 @@ class AuthRemoteDataSourceImpl {
       );
     } on AppwriteException catch (e) {
       if (e.code == 401 && e.message?.contains('session is active.') == true) {
-        // اگر سشن فعال است، ابتدا همه سشن‌ها را پاک کن و دوباره تلاش کن
+        ///If the session is active, first clear all sessions and try again.
         await _account.deleteSessions();
         return await _account.createEmailPasswordSession(
           email: email,
           password: password,
         );
       }
-      rethrow; // سایر خطاها را به بالا منتقل کن
+      rethrow;
     }
   }
 
