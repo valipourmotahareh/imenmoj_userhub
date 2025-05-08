@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -16,7 +17,7 @@ class UserListScreen extends StatelessWidget {
     var status = await Permission.storage.request();
     if (!status.isGranted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('مجوز ذخیره‌سازی داده نشد')),
+          SnackBar(content: Text('user_list_screen.storage_permission_not_granted'.tr())),
       );
       return;
     }
@@ -25,7 +26,7 @@ class UserListScreen extends StatelessWidget {
       final directory = await getExternalStorageDirectory();
       if (directory == null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('خطا در دسترسی به حافظه')),
+        SnackBar(content: Text('user_list_screen.memory_access_error'.tr())),
         );
         return;
       }
@@ -47,16 +48,16 @@ class UserListScreen extends StatelessWidget {
 
       if (taskId != null) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('دانلود شروع شد: $fileName')),
+          SnackBar(content: Text('${'user_list_screen.download_started'.tr()}$fileName')),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('خطا در شروع دانلود')),
+        SnackBar(content: Text('user_list_screen.error_starting_download'.tr())),
         );
       }
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('خطا در دانلود تصویر')),
+          SnackBar(content: Text('user_list_screen.error_downloading_image'.tr())),
       );
     }
   }
@@ -67,7 +68,7 @@ class UserListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('لیست کاربران'),
+        title: Text('user_list_screen.user_list'.tr()),
         actions: [
           IconButton(
             icon: const Icon(Icons.add),
@@ -119,9 +120,9 @@ class UserListScreen extends StatelessWidget {
                         }
                       },
                       itemBuilder: (context) => [
-                        const PopupMenuItem(value: 'edit', child: Text('ویرایش')),
-                        const PopupMenuItem(value: 'delete', child: Text('حذف')),
-                        const PopupMenuItem(value: 'download', child: Text('دانلود عکس')),
+                        PopupMenuItem(value: 'edit', child: Text('user_list_screen.edit'.tr())),
+                        PopupMenuItem(value: 'delete', child: Text('user_list_screen.delete'.tr())),
+                        PopupMenuItem(value: 'download', child: Text('user_list_screen.download_image'.tr())),
                       ],
                     ),
                   ),

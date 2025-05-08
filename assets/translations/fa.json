@@ -17,5 +17,18 @@
     "user_email": "ایمیل",
     "user_save": "ذخیره"
 
+  },
+  "user_list_screen": {
+    "storage_permission_not_granted": "مجوز ذخیره سازی داده نشد",
+    "memory_access_error": "خطا در دسترسی به حافظه",
+    "download_started": "دانلود شروع شد:",
+    "error_starting_download": "خطا در شروع دانلود",
+    "error_downloading_image": "خطا در دانلود تصویر",
+    "user_list": "لیست کاربران",
+    "edit": "ویرایش",
+    "delete": "حذف",
+    "download_image": "دانلود عکس"
+
+
   }
 }

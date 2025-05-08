@@ -18,5 +18,17 @@
     "user_email": "Email",
     "user_save": "Save"
 
+  },
+  "user_list_screen": {
+    "storage_permission_not_granted.": "Storage permission not granted.",
+    "memory_access_error": "Memory access error",
+    "download_started": "Download started:",
+    "error_starting_download": "Error Starting Download",
+    "error_downloading_image": "Error downloading image",
+    "user_list": "User list",
+    "edit": "Edit",
+    "delete": "Delete",
+    "download_image": "download Image"
+
   }
 }
