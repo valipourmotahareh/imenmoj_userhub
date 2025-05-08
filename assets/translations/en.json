@@ -1,0 +1,12 @@
+{
+  "auth_screen":{
+    "login" : "login ",
+    "register" : "register",
+    "name" : "name",
+    "email" : "email",
+    "password" : "password",
+    "label_register": "Don't have an account?",
+    "label_login": "Do you have an account? Log in"
+
+  }
+}

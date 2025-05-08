@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:imenmoj_userhub/core/widgets/custom_button.dart';
@@ -8,7 +9,7 @@ import 'package:imenmoj_userhub/features/auth/presentation/bloc/auth_state.dart'
 import 'package:imenmoj_userhub/features/user/presentation/screens/user_list_screen.dart';
 
 class AuthScreen extends StatefulWidget {
-  const AuthScreen({Key? key}) : super(key: key);
+  const AuthScreen({super.key});
 
   @override
   State<AuthScreen> createState() => _AuthScreenState();
@@ -64,22 +65,22 @@ class _AuthScreenState extends State<AuthScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(_isLogin ? 'ورود' : 'ثبت‌نام'),
+                  Text(_isLogin ? 'auth_screen.login'.tr() :  'auth_screen.register'.tr()),
                   const SizedBox(height: 32),
                   if (!_isLogin)
                     CustomTextField(
                       controller: _nameController,
-                      labelText: 'نام',
+                      labelText: 'auth_screen.name'.tr(),
                     ),
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _emailController,
-                    labelText: 'ایمیل',
+                    labelText: 'auth_screen.email'.tr(),
                   ),
                   const SizedBox(height: 16),
                   CustomTextField(
                     controller: _passwordController,
-                    labelText: 'رمز عبور',
+                    labelText: 'auth_screen.password'.tr(),
                     obscureText: true,
                   ),
                   const SizedBox(height: 24),
@@ -87,7 +88,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     const CircularProgressIndicator()
                   else
                     CustomButton(
-                      text: _isLogin ? 'ورود' : 'ثبت‌نام',
+                      text: _isLogin ? 'auth_screen.login'.tr() :  'auth_screen.register'.tr(),
                       onPressed: _submit,
                     ),
                   const SizedBox(height: 12),
@@ -95,8 +96,8 @@ class _AuthScreenState extends State<AuthScreen> {
                     onPressed: _toggleAuthMode,
                     child: Text(
                       _isLogin
-                          ? 'حساب کاربری ندارید؟ ثبت‌نام کنید'
-                          : 'حساب کاربری دارید؟ وارد شوید',
+                          ? 'auth_screen.label_register'.tr()
+                          : 'auth_screen.label_login'.tr(),
                     ),
                   ),
                 ],

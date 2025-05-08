@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
@@ -11,12 +12,14 @@ import 'package:imenmoj_userhub/features/user/presentation/bloc/user_bloc.dart';
 import 'package:imenmoj_userhub/features/auth/presentation/screens/auth_screen.dart';
 import 'package:imenmoj_userhub/features/user/presentation/screens/user_form_screen.dart';
 
+import 'config/app_config.dart';
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 FlutterLocalNotificationsPlugin();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
+  await EasyLocalization.ensureInitialized();
   /// Initialize essential services
   await FlutterDownloader.initialize(debug: true);
   await Hive.initFlutter();
@@ -50,7 +53,12 @@ void main() async {
       ?.createNotificationChannel(channel);
 
   /// Run the app
-  runApp(const MyApp());
+  runApp(EasyLocalization(
+      startLocale: AppConfig.startLocale,
+      supportedLocales: AppConfig.supportedLocales,
+      path: AppConfig.langPath,
+      useOnlyLangCode: true,
+      child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -68,9 +76,12 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        locale: context.locale,
         debugShowCheckedModeBanner: false,
         title: 'Imen Moj Task',
         theme: ThemeData(primarySwatch: Colors.blue),
+        supportedLocales: context.supportedLocales,
+        localizationsDelegates: context.localizationDelegates,
         initialRoute: '/',
         routes: {
           '/': (context) => AuthScreen(),
