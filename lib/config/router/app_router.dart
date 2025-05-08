@@ -29,7 +29,6 @@ class AppRouter {
         pageBuilder: (state) {
           final user = state.extra as UserModel?;
           return UserFormScreen(user: user);
-          return  UserFormScreen();
         },
       ),
       _route(

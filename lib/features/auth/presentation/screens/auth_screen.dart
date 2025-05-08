@@ -8,7 +8,6 @@ import 'package:imenmoj_userhub/core/widgets/custom_text_field.dart';
 import 'package:imenmoj_userhub/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:imenmoj_userhub/features/auth/presentation/bloc/auth_event.dart';
 import 'package:imenmoj_userhub/features/auth/presentation/bloc/auth_state.dart';
-import 'package:imenmoj_userhub/features/user/presentation/screens/user_list_screen.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
