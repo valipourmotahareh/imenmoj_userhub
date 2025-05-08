@@ -14,10 +14,15 @@ class UserListScreen extends StatelessWidget {
   const UserListScreen({super.key});
 
   Future<void> _downloadImage(BuildContext context, String url) async {
+    final messenger = ScaffoldMessenger.of(context);
+
     var status = await Permission.storage.request();
     if (!status.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('user_list_screen.storage_permission_not_granted'.tr())),
+      if (!context.mounted) return;
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('user_list_screen.storage_permission_not_granted'.tr()),
+        ),
       );
       return;
     }
@@ -25,14 +30,14 @@ class UserListScreen extends StatelessWidget {
     try {
       final directory = await getExternalStorageDirectory();
       if (directory == null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('user_list_screen.memory_access_error'.tr())),
+        if (!context.mounted) return;
+        messenger.showSnackBar(
+          SnackBar(content: Text('user_list_screen.memory_access_error'.tr())),
         );
         return;
       }
 
       final fileName = url.split('/').last;
-
       final savedDir = Directory(directory.path);
       if (!await savedDir.exists()) {
         await savedDir.create(recursive: true);
@@ -46,18 +51,29 @@ class UserListScreen extends StatelessWidget {
         openFileFromNotification: true,
       );
 
+      if (!context.mounted) return;
+
       if (taskId != null) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('${'user_list_screen.download_started'.tr()}$fileName')),
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text(
+              '${'user_list_screen.download_started'.tr()} $fileName',
+            ),
+          ),
         );
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('user_list_screen.error_starting_download'.tr())),
+        messenger.showSnackBar(
+          SnackBar(
+            content: Text('user_list_screen.error_starting_download'.tr()),
+          ),
         );
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('user_list_screen.error_downloading_image'.tr())),
+      if (!context.mounted) return;
+      messenger.showSnackBar(
+        SnackBar(
+          content: Text('user_list_screen.error_downloading_image'.tr()),
+        ),
       );
     }
   }
@@ -89,20 +105,24 @@ class UserListScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final user = users[index];
                 return Card(
-                  margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 8,
+                    vertical: 4,
+                  ),
                   child: ListTile(
-                    leading: user.avatarUrl.isNotEmpty
-                        ? ClipOval(
-                      child: SizedBox(
-                        width: 48,
-                        height: 48,
-                        child: Image.file(
-                          File(user.avatarUrl),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                        : const Icon(Icons.person, size: 48),
+                    leading:
+                        user.avatarUrl.isNotEmpty
+                            ? ClipOval(
+                              child: SizedBox(
+                                width: 48,
+                                height: 48,
+                                child: Image.file(
+                                  File(user.avatarUrl),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            )
+                            : const Icon(Icons.person, size: 48),
                     title: Text(user.name),
                     subtitle: Text(user.email),
                     trailing: PopupMenuButton<String>(
@@ -119,11 +139,23 @@ class UserListScreen extends StatelessWidget {
                           _downloadImage(context, user.avatarUrl);
                         }
                       },
-                      itemBuilder: (context) => [
-                        PopupMenuItem(value: 'edit', child: Text('user_list_screen.edit'.tr())),
-                        PopupMenuItem(value: 'delete', child: Text('user_list_screen.delete'.tr())),
-                        PopupMenuItem(value: 'download', child: Text('user_list_screen.download_image'.tr())),
-                      ],
+                      itemBuilder:
+                          (context) => [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Text('user_list_screen.edit'.tr()),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Text('user_list_screen.delete'.tr()),
+                            ),
+                            PopupMenuItem(
+                              value: 'download',
+                              child: Text(
+                                'user_list_screen.download_image'.tr(),
+                              ),
+                            ),
+                          ],
                     ),
                   ),
                 );

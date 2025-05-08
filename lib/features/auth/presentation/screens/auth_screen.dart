@@ -65,7 +65,11 @@ class _AuthScreenState extends State<AuthScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(_isLogin ? 'auth_screen.login'.tr() :  'auth_screen.register'.tr()),
+                  Text(
+                    _isLogin
+                        ? 'auth_screen.login'.tr()
+                        : 'auth_screen.register'.tr(),
+                  ),
                   const SizedBox(height: 32),
                   if (!_isLogin)
                     CustomTextField(
@@ -88,7 +92,10 @@ class _AuthScreenState extends State<AuthScreen> {
                     const CircularProgressIndicator()
                   else
                     CustomButton(
-                      text: _isLogin ? 'auth_screen.login'.tr() :  'auth_screen.register'.tr(),
+                      text:
+                          _isLogin
+                              ? 'auth_screen.login'.tr()
+                              : 'auth_screen.register'.tr(),
                       onPressed: _submit,
                     ),
                   const SizedBox(height: 12),

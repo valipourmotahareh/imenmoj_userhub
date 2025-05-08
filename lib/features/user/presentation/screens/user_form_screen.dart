@@ -44,32 +44,43 @@ class _UserFormScreenState extends State<UserFormScreen> {
 
   Future<void> _pickImage() async {
     final picker = ImagePicker();
+
     final pickedFile = await showModalBottomSheet<XFile?>(
       context: context,
-      builder: (context) => SafeArea(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ListTile(
-              leading: const Icon(Icons.photo_library),
-              title: Text('user_form_screen.select_gallery'.tr()),
-              onTap: () async {
-                final picked = await picker.pickImage(source: ImageSource.gallery);
-                Navigator.pop(context, picked);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.camera_alt),
-              title:  Text('user_form_screen.taking_picture_camera'.tr()),
-              onTap: () async {
-                final picked = await picker.pickImage(source: ImageSource.camera);
-                Navigator.pop(context, picked);
-              },
-            ),
-          ],
-        ),
-      ),
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: Text('user_form_screen.select_gallery'.tr()),
+                onTap: () async {
+                  final picked = await picker.pickImage(
+                    source: ImageSource.gallery,
+                  );
+                  if (!context.mounted) return;
+                  Navigator.pop(context, picked);
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.camera_alt),
+                title: Text('user_form_screen.taking_picture_camera'.tr()),
+                onTap: () async {
+                  final picked = await picker.pickImage(
+                    source: ImageSource.camera,
+                  );
+                  if (!context.mounted) return;
+                  Navigator.pop(context, picked);
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
+
+    if (!mounted) return;
 
     if (pickedFile != null) {
       setState(() {
@@ -116,7 +127,11 @@ class _UserFormScreenState extends State<UserFormScreen> {
     final isEditing = _user != null;
     return Scaffold(
       appBar: AppBar(
-        title: Text(isEditing ? 'user_form_screen.user_edit'.tr() : 'user_form_screen.user_create'.tr()),
+        title: Text(
+          isEditing
+              ? 'user_form_screen.user_edit'.tr()
+              : 'user_form_screen.user_create'.tr(),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -128,14 +143,16 @@ class _UserFormScreenState extends State<UserFormScreen> {
                 onTap: _pickImage,
                 child: CircleAvatar(
                   radius: 50,
-                  backgroundImage: _avatarImage != null
-                      ? FileImage(_avatarImage!)
-                      : (_user?.avatarUrl.isNotEmpty ?? false)
-                      ? NetworkImage(_user!.avatarUrl) as ImageProvider
-                      : null,
-                  child: _avatarImage == null && (_user?.avatarUrl.isEmpty ?? true)
-                      ? const Icon(Icons.person, size: 50)
-                      : null,
+                  backgroundImage:
+                      _avatarImage != null
+                          ? FileImage(_avatarImage!)
+                          : (_user?.avatarUrl.isNotEmpty ?? false)
+                          ? NetworkImage(_user!.avatarUrl) as ImageProvider
+                          : null,
+                  child:
+                      _avatarImage == null && (_user?.avatarUrl.isEmpty ?? true)
+                          ? const Icon(Icons.person, size: 50)
+                          : null,
                 ),
               ),
               const SizedBox(height: 16),
